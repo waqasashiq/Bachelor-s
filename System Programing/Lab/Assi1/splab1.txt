@@ -1,0 +1,95 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct stack{
+	int val;
+	struct stack *next;
+};
+struct stack *header;
+
+#include"myheader.h"
+int main(){
+	int ter;
+	int ch;
+	printf("To continue operations press1 to terminate -1: ");
+	scanf("%d",&ter);
+	struct stack *header=NULL;
+	while(ter!=-1){
+		printf("\nTo pust values in the stack press 1 to pop press 2 to view stack press 3: ");
+		scanf("%d",&ch);
+		switch (ch)
+		{
+		case 1:
+			push();
+			printf("\nTo continue operations press1 to terminate -1: ");
+			scanf("%d",&ter);
+			break;
+		case 2:
+			pop();
+			printf("\nTo continue operations press1 to terminate -1: ");
+			scanf("%d",&ter);
+			break;
+		case 3:
+			view();
+			printf("\nTo continue operations press1 to terminate -1: ");
+			scanf("%d",&ter);
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+
+#include"myheader.h"
+void push(){
+	struct stack *nptr;
+	if(header=NULL){		
+		header=(struct stack*)malloc(sizeof(struct stack));
+		printf("Enter the data values: ");
+		scanf("%d",&header->val);
+		header->next=NULL;
+	}
+	else{
+		nptr=(struct stack*)malloc(sizeof(struct stack));
+		printf("Enter the data values: ");
+		scanf("%d",&nptr->val);
+		nptr->next=header;
+		header=nptr;
+	}
+
+}
+
+
+#include"myheader.h"
+int pop(){
+	if(header=NULL){
+		printf("No data is entered stack is empty: ");
+	}
+	else{
+		printf("The value poped is %d :",header->val);
+		header=header->next;
+	}
+}
+
+
+#include"myheader.h"
+void view(){
+	while (header->next!=NULL)
+	{
+		printf("%d-\t",header->val);
+		header=header->next;
+	}
+	printf("%d->",header->val);
+}
+
+
+stack.exe:main.o pop.o view.o push.o
+	gcc -o stack.exe main.o pop.o view.o push.o
+main.o:main.c myheader.h
+	gcc -c main.c
+pop.o:pop.c myheader.h
+	gcc -c pop.c
+push.o:push.c myheader.h
+	gcc -c push.c
+view.o:view.c myheader.h
+	gcc -c view.c 

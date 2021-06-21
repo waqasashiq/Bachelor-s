@@ -1,0 +1,85 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<unistd.h>
+#include<dirent.h>
+#include<errno.h>
+
+int main(int argc,char *argv[]){
+	struct dirent *direntp;
+	pid_t childpid;
+	DIR *dirp;
+
+	if((dirp = opendir(argv[1])) == NULL){
+		perror("Directory can not be opened");
+		return 1;
+	}
+	
+	while((direntp=readdir(dirp))!=NULL){
+		if((childpid=fork())<=0)
+		break;
+			if(childpid=0){
+			execl("/home/waqasashiq/Desktop/mycopyfile.c","mycopyfile.c",direntp->d_name,argv[2],NULL);
+			}
+	}
+
+	while((closedir(dirp)== -1) && (errno == EINTR))
+	return 0;
+
+}
+
+
+
+
+
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<limits.h>
+#include<sys/stat.h>
+#include<fcntl.h>
+#define size 1024
+int main(int argc, char *argv[]){
+	int bytes;
+	int fromfd;
+	int tofd;
+	char str[100];
+	char dstr[100];
+	
+	strcpy(str,"/home/waqasashiq/Desktop/Source/");
+	strcat(str,argv[1]);
+	
+	strcpy(dstr,"/home/waqasashiq/Desktop/Destination/");
+	strcat(dstr,argv[1]);
+	
+	if(argc!=3){
+	
+		fprintf(stderr,"usage: %s from file to file\n",argv[0]);
+		return 1;
+
+	}
+	if((fromfd=open(str,O_RDONLY))== -1){
+		perror("Failed to open input files:");
+		return 1;
+	} 
+	if((tofd=open(dstr,O_WRONLY | O_CREAT | O_EXCL,S_IRUSR | S_IWUSR))== -1){
+		perror("Failed to creat the file");
+		return 1;	
+	}
+   bytes = copyfile(fromfd,tofd);
+   return 0;
+}
+
+
+
+
+all: mycopydir mycopyfile
+mycopydir:mycopydir.o
+	gcc -o mycopydir mycopydir.o
+mycopydir.o:mycopydir.c
+	gcc -c mycopydir.c
+mycopyfile:mycopyfile.o
+	gcc -o mycopyfile mycopyfile.o
+mycopyfile.o:mycopyfile.c
+	gcc -c mycopyfile.c
+

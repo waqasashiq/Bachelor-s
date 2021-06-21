@@ -1,0 +1,25 @@
+all: client server
+
+client: client.o square_clnt.o square_xdr.o
+	gcc -o client client.o square_clnt.o square_xdr.o -lnsl
+
+client.o: client.c
+	gcc -c client.c
+
+square_clnt.o: square_clnt.c
+	gcc -c square_clnt.c
+
+square_xdr.o: square_xdr.c
+	gcc -c square_xdr.c
+
+square_svc.o: square_svc.c
+	gcc -c square_svc.c
+
+server: server.o square_svc.o square_xdr.o
+	gcc -o server server.o square_svc.o square_xdr.o
+
+square_clnt.c square_xdr.c square_svc.c: square.x
+	rpcgen -C square.x
+
+clean:
+	rm -f *.o client server square_clnt.c square_xdr.c square_svc.c

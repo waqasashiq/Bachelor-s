@@ -1,0 +1,126 @@
+					
+
+
+				
+				ASSIGNMENT#1
+
+
+
+
+
+WAQAS ASHIQ
+
+BCS-FA11-201
+
+SECTION-C
+
+			
+			
+			
+			SYSTEM PROGRAMMING
+
+
+
+
+
+
+
+TO: 
+	MR.NADEEM GHAFOOR CHAUDHARY.
+
+
+
+
+
+
+HEADER:
+#include<stdio.h> 
+#include<stdlib.h> 
+struct student{ 
+	int id; 
+	char name[25]; 
+	float cgpa; 
+	short int age; 
+	struct student *next; 
+}; 
+struct student *start; 
+struct student *cur; 
+
+
+MAIN:
+#include"Header.h" 
+void main(){ 
+	linklist(); 
+}
+
+LINKLIST:
+#include "Header.h" 
+void linklist() 
+{ 
+	start=(struct student *)malloc(sizeof(struct student)); 
+	cur=start; 
+	int ter=0; 
+	printf("\nEnter -1 to terminate the entries and 1 to continue:"); 
+	scanf("%d",&ter); 
+	while(ter!=-1){ 
+		printf("Enter the name of student: "); 
+		scanf("%s",cur->name); 
+		 
+		printf("Enter the id of student: "); 
+		scanf("%d",&cur->id); 
+
+		printf("Enter the cgpa of student: "); 
+		scanf("%f",&cur->cgpa); 
+
+		printf("Enter the age of student: "); 
+		scanf("%hd",&cur->age); 
+		cur->next= (struct student *)malloc(sizeof(struct student)); 
+		cur = cur->next; 
+		cur->next=NULL; 
+		 
+		 
+		 
+		printf("\nEnter -1 to terminate the entries:"); 
+		scanf("%d",&ter); 
+	} 
+		save(); 
+}
+SAVE:
+#include"Header.h" 
+void save() 
+{ 
+	cur=start; 
+	FILE *cfPtr; 
+	if ( ( cfPtr=fopen( "mydata.txt","w" ) ) == NULL ) 
+	{ 
+		printf( "Failed to open the requested File....\n" ); 
+	} 
+	 
+	else 
+	{	 
+		fprintf( cfPtr,"ID\t\tName\t\t\tCgpa\t\tAge"); 
+		printf("ID\t\tName\t\t\tCgpa\t\tAge"); 
+		while(cur->next!=NULL){ 
+
+		fprintf( cfPtr,"\n%d%18s%23.2f%16hd",cur->id,cur->name,cur->cgpa,cur->age); 
+		printf( "\n\n%d%18s%23.2f%16hd",cur->id,cur->name,cur->cgpa,cur->age ); 
+		printf( "\n\n" ); 
+		cur=cur->next;} 
+} 
+	    fclose( cfPtr ); 
+}
+
+MAKEFILE:
+myfile: main.o libassign1.a save.o
+	gcc -o myfile main.o linklist.o save.o
+
+libassign1.a: linklist.o
+	ar cr libassign1.a linklist.o
+linklist.o: linklist.c Header.h
+	gcc -c linklist.c
+main.o: main.c Header.h
+gcc -c main.csave.o: save.c Header.h
+gcc -c save.c
+
+
+

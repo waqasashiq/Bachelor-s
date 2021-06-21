@@ -1,0 +1,91 @@
+package com.company;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
+
+public class Main {
+
+    private static String fileContent = "";
+    private static ArrayList<Character> spclCharacters = new ArrayList<Character>();
+    private static ArrayList<String> keywords = new ArrayList<String>();
+
+    public static void main(String[] args) {
+        InitializeCompiler();
+
+        ReadFile("D:\\#CIIT\\8th Semester\\Compiler Construction\\Lab 4\\out\\production\\Lab 4\\com\\company\\program.txt");
+
+        char[] tokens = fileContent.toCharArray();
+        String variable = "";
+        for(char x : tokens){
+            if(isCharacter(x)){
+                variable += x;
+            } else if(variable != "") {
+                if((!isKeyword(variable)))
+                    System.out.println("Var: " + variable);
+
+                variable = "";
+            }
+
+            if(isSpecialCharacters(x))
+            {
+                System.out.println("Spcl Char: " + x);
+            }
+        }
+        System.out.print("\n");
+    }
+
+    private static void InitializeCompiler(){
+        spclCharacters.add(0, '{');
+        spclCharacters.add(1, '}');
+        spclCharacters.add(0, '[');
+        spclCharacters.add(1, ']');
+        spclCharacters.add(2, '(');
+        spclCharacters.add(3, ')');
+        spclCharacters.add(4, '*');
+        spclCharacters.add(5, '+');
+        spclCharacters.add(6, '-');
+        spclCharacters.add(7, '/');
+        spclCharacters.add(8, '=');
+
+        keywords.add(0, "void");
+        keywords.add(1, "int");
+        keywords.add(2, "char");
+        keywords.add(3, "printf");
+    }
+
+    private static void ReadFile(String file){
+        try {
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bReader = new BufferedReader(fileReader);
+            String s = "";
+
+            while ((s = bReader.readLine()) != null){
+                fileContent += s;
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    private static boolean isSpecialCharacters(char x){
+        if(spclCharacters.contains(x))
+            return true;
+
+        return false;
+    }
+
+    private static boolean isCharacter(char x){
+        if((Character.isAlphabetic(x)) || (x == '_'))
+            return true;
+
+        return false;
+    }
+
+    private static boolean isKeyword(String var){
+        if(keywords.contains(var))
+            return true;
+
+        return false;
+    }
+}

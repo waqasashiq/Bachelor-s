@@ -1,0 +1,5 @@
+c:\users\waqas ashiq\documents\visual studio 2010\Projects\HospitalManagement\HospitalManagement\bin\HospitalManagement.dll
+c:\users\waqas ashiq\documents\visual studio 2010\Projects\HospitalManagement\HospitalManagement\bin\HospitalManagement.pdb
+c:\users\waqas ashiq\documents\visual studio 2010\Projects\HospitalManagement\HospitalManagement\obj\Debug\HospitalManagement.dll
+c:\users\waqas ashiq\documents\visual studio 2010\Projects\HospitalManagement\HospitalManagement\obj\Debug\HospitalManagement.pdb
+C:\Users\Waqas Ashiq\documents\visual studio 2010\Projects\HospitalManagement\HospitalManagement\obj\Debug\HospitalManagement.csprojResolveAssemblyReference.cache
